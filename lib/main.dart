@@ -14,9 +14,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter();
+
   Hive.registerAdapter(SubTaskModelAdapter());
+  Hive.registerAdapter(MainQuestModelAdapter());
+
   await Hive.openBox<MainQuestModel>('mainQuestDB');
   await Hive.openBox<SubTaskModel>('sideQuestDB');
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

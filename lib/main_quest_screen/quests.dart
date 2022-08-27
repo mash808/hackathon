@@ -234,8 +234,7 @@ class _addMainQuestsState extends State<addMainQuests> {
                             child: const Text('Confirm'),
                             onPressed: () {
                               mainDB.add(MainQuestModel(
-                                  mainQuestIcon:
-                                      Image.asset('images/easy_boss.png'),
+                                  mainQuestIconPath: 'images/easy_boss.png',
                                   mainQuestName: mainQuestNameController.text,
                                   subTasks: <SubTaskModel>[
                                     SubTaskModel(
