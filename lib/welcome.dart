@@ -33,7 +33,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
           FractionallySizedBox(
             widthFactor: 0.95,
             child: Container(
-                height: (MediaQuery.of(context).size.height / 4),
+                // height: (MediaQuery.of(context).size.height / 4),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
