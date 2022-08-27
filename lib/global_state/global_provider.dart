@@ -20,4 +20,8 @@ class LoggedIn extends StateNotifier<bool> {
   void logIn() {
     state = true;
   }
+
+  void logout() {
+    state = false;
+  }
 }

@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/column_wrapper.dart';
+import 'package:hackathon_app/global_state/global_provider.dart';
+import 'package:hackathon_app/profile_screen/profile.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+class Profile extends ConsumerStatefulWidget {
+  // final Function handleTap;
+  const Profile({
+    Key? key,
+    // required this.handleTap,
+  }) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState();
+  ConsumerState<Profile> createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileState extends ConsumerState<Profile> {
   @override
   Widget build(BuildContext context) {
+    final loggedIn = ref.watch(globalProvider);
+    final pageIndex = ref.watch(indexProvider);
     return ColumnWrapper(
         child: Column(
       children: [
@@ -35,7 +44,21 @@ class _ProfileState extends State<Profile> {
               style: TextStyle(
                   fontSize: 20, color: Color.fromARGB(255, 253, 211, 152)),
               textAlign: TextAlign.center,
-            )
+            ),
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  ref.read(globalProvider.notifier).logout();
+                  ref.read(indexProvider.notifier).updateIndex(3);
+                });
+              },
+              child: Image.asset(
+                'images/logout.jpg',
+                height: 60,
+                // scale: 0.6,
+              ),
+            ),
           ],
         )
       ],

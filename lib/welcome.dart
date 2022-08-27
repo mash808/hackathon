@@ -92,7 +92,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   ],
                 )),
           ),
-          Container(height: 40),
+          Container(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
