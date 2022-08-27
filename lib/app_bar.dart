@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hackathon_app/global_state/global_provider.dart';
 
-class ProfileAppBar extends StatefulWidget implements PreferredSizeWidget {
+class ProfileAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   ProfileAppBar({Key? key})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -11,20 +13,21 @@ class ProfileAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Size preferredSize; // default is 56.0
 
   @override
-  State<ProfileAppBar> createState() => _ProfileAppBarState();
+  ConsumerState<ProfileAppBar> createState() => _ProfileAppBarState();
 }
 
-class _ProfileAppBarState extends State<ProfileAppBar> {
+class _ProfileAppBarState extends ConsumerState<ProfileAppBar> {
   @override
   Widget build(BuildContext context) {
+    final loggedIn = ref.watch(globalProvider.notifier).state;
     return AppBar(
       backgroundColor: const Color.fromRGBO(72, 63, 51, 1), //(0x3E3529),
-      title: Row(
+      title:  loggedIn ?   Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
             'images/gnome.png',
-            height: 50,
+            height: 50, 
           ),
           Container(
             width: MediaQuery.of(context).size.width - 200,
@@ -40,7 +43,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
             ),
           ),
         ],
-      ),
+      ) : null
       // bottom: TabBar(tabs: [
       //   Tab(
       //     icon: Icon(Icons.psychology),
