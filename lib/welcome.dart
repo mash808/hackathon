@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/column_wrapper.dart';
+import 'package:hackathon_app/constants.dart';
 import 'package:hackathon_app/global_state/global_provider.dart';
 
 class WelcomeScreen extends ConsumerStatefulWidget {
@@ -35,82 +36,78 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
             child: Container(
                 // height: (MediaQuery.of(context).size.height / 4),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Text('Username',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(253, 211, 152, 1.0))),
-                          Container(height: 5),
-                          TextField(
-                            controller: userNameController,
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              hintText: 'keanu_reeves',
-                            ),
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text('Username',
+                          style: TextStyle(color: kTextCream)),
+                      Container(height: 5),
+                      TextField(
+                        controller: userNameController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Password',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(253, 211, 152, 1.0))),
-                          Container(height: 5),
-                          TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              hintText: '*************',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(height: 10),
-                    Container(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            ref.read(globalProvider.notifier).logIn();
-                            if (userNameController.text == '') {
-                              ref
-                                  .read(nameProvider.notifier)
-                                  .setName('Guest123');
-                            } else {
-                              ref
-                                  .read(nameProvider.notifier)
-                                  .setName(userNameController.text);
-                            }
-                            ;
-                            ref.read(indexProvider.notifier).updateIndex(0);
-                          });
-                        },
-                        child: const Text('Login'),
-                        style: TextButton.styleFrom(
-                          primary: Colors.black,
-                          backgroundColor: Color.fromRGBO(253, 211, 152, 1.0),
+                          hintText: 'keanu_reeves',
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Password',
+                          style: TextStyle(color: kTextCream)),
+                      Container(height: 5),
+                      TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          hintText: '*************',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(height: 10),
+                Container(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        ref.read(globalProvider.notifier).logIn();
+                        if (userNameController.text == '') {
+                          ref.read(nameProvider.notifier).setName('Guest123');
+                        } else {
+                          ref
+                              .read(nameProvider.notifier)
+                              .setName(userNameController.text);
+                        }
+                        ;
+                        ref.read(indexProvider.notifier).updateIndex(0);
+                      });
+                    },
+                    child: const Text('Login'),
+                    style: TextButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: kTextCream,
                     ),
-                  ],
-                )),
+                  ),
+                ),
+              ],
+            )),
           ),
           Container(height: 20),
           Row(
@@ -124,7 +121,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   child: const Text('Create Account'),
                   style: TextButton.styleFrom(
                     primary: Colors.black,
-                    backgroundColor: Color.fromRGBO(253, 211, 152, 1.0),
+                    backgroundColor: kTextCream,
                   ),
                 ),
               ),
