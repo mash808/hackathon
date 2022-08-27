@@ -54,7 +54,7 @@ class MainQuests extends StatelessWidget {
             offstage: 1 != 1, // the database value is not veryeasy,
             child: Container(
               constraints: BoxConstraints(
-                  maxWidth: ((MediaQuery.of(context).size.height - 90) / 2)),
+                  maxWidth: ((MediaQuery.of(context).size.height - 120) / 2)),
               child: Column(children: [
                 GestureDetector(
                     onTap: () {},

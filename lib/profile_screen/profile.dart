@@ -75,8 +75,6 @@ class _ProfileState extends ConsumerState<Profile> {
               Container(height: 5),
               XPRow(),
             ]),
-            const SizedBox(height: 40, width: 10),
-            const SizedBox(height: 40, width: 10),
             ProfileHeader(
                 label: " profile ", imageAddress: "images/character.png"),
             ProfileHeader(
@@ -90,7 +88,125 @@ class _ProfileState extends ConsumerState<Profile> {
               style: TextStyle(fontSize: 20, color: kTextCream),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
+            Container(height: 10),
+            Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: kOsrsBrown,
+                ),
+                child: Column(
+                  children: [
+                    Container(height: 10),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 50.0,
+                      runSpacing: 5.0,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              height: 47,
+                              width: 47,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'images/very_hard_boss.png'),
+                                      fit: BoxFit.cover),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                            const Text('0',
+                                style: TextStyle(color: kTextCream)),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 47,
+                              width: 47,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/hard_boss.png'),
+                                      fit: BoxFit.cover),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                            const Text('5',
+                                style: TextStyle(color: kTextCream)),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 47,
+                              width: 47,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image:
+                                          AssetImage('images/medium_boss.png'),
+                                      fit: BoxFit.cover),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                            const Text('5',
+                                style: TextStyle(color: kTextCream)),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 47,
+                              width: 47,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/easy_boss.png'),
+                                      fit: BoxFit.cover),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                            const Text('5',
+                                style: TextStyle(color: kTextCream)),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 47,
+                              width: 47,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'images/very_easy_boss.png'),
+                                      fit: BoxFit.cover),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                            const Text('5',
+                                style: TextStyle(color: kTextCream)),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              height: 47,
+                              width: 47,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'images/side_quests_achievement.png'),
+                                      fit: BoxFit.cover),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                            const Text('15',
+                                style: TextStyle(color: kTextCream)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Container(height: 5)
+                  ],
+                )),
             GestureDetector(
               onTap: () {
                 setState(() {
