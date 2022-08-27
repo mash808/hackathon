@@ -20,13 +20,25 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
     return AppBar(
       backgroundColor: const Color.fromRGBO(72, 63, 51, 1), //(0x3E3529),
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'images/quests_logo.png',
-            height: 56,
+            'images/gnome.png',
+            height: 50,
           ),
-          Text('Profile Name: Lvl x'),
+          Container(
+            width: MediaQuery.of(context).size.width - 200,
+            height: 25,
+            decoration: const BoxDecoration(
+                color: Color.fromRGBO(253, 211, 152, 1),
+                borderRadius:
+                    BorderRadius.horizontal(right: Radius.circular(8))),
+            child: const Text(
+              'Profile Name',
+              style: TextStyle(color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
       // bottom: TabBar(tabs: [
