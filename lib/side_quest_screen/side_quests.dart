@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hackathon_app/column_wrapper.dart';
+import 'package:hackathon_app/models/sub_task_model.dart';
+import 'package:hackathon_app/side_quest_screen/display_sub_quests.dart';
+import 'package:hive/hive.dart';
 
-class SideQuests extends StatelessWidget {
+class SideQuests extends StatefulWidget {
   const SideQuests({Key? key}) : super(key: key);
+
+  @override
+  State<SideQuests> createState() => _SideQuestsState();
+}
+
+class _SideQuestsState extends State<SideQuests> {
+  Box<SubTaskModel> sideQuestDB = Hive.box('sideQuestDB');
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +25,27 @@ class SideQuests extends StatelessWidget {
           FractionallySizedBox(
             widthFactor: 0.95,
             child: Column(
-              children: const [
-                individualQuests(),
-                individualQuests(),
-                individualQuests(),
-                newSideQuestButton(),
+              children: [
+                DisplaySubQuests(db: sideQuestDB),
+                NewSideQuestButton(
+                  db: sideQuestDB,
+                ),
+                GestureDetector(
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    color: Colors.pink,
+                  ),
+                  onTap: () {
+                    sideQuestDB.add(
+                      SubTaskModel(
+                        subTaskName: 'kill chickens',
+                        exp: 1,
+                        completed: false,
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           )
@@ -28,8 +55,15 @@ class SideQuests extends StatelessWidget {
   }
 }
 
-class individualQuests extends StatelessWidget {
-  const individualQuests({super.key});
+class IndividualQuests extends StatelessWidget {
+  final String sideQuestName;
+  final int exp;
+
+  const IndividualQuests({
+    super.key,
+    required this.exp,
+    required this.sideQuestName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,25 +72,40 @@ class individualQuests extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          completeSideQuestsButton(),
+          CompleteSideQuestsButton(),
           Container(width: (MediaQuery.of(context).size.width * 0.025)),
           Container(
-              width: (MediaQuery.of(context).size.width * 0.65),
+              width: (MediaQuery.of(context).size.width * 0.6),
               padding: const EdgeInsets.all(10),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
                 color: Color.fromRGBO(48, 36, 29, 1.0),
               ),
-              child: const Text('get milk',
-                  style: TextStyle(color: Color.fromRGBO(255, 184, 0, 1.0))))
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    sideQuestName,
+                    style: const TextStyle(
+                      color: Color.fromRGBO(255, 184, 0, 1.0),
+                    ),
+                  ),
+                  Text(
+                    'EXP: $exp',
+                    style: const TextStyle(
+                      color: Colors.lightGreen,
+                    ),
+                  ),
+                ],
+              ))
         ],
       ),
     );
   }
 }
 
-class completeSideQuestsButton extends StatelessWidget {
-  const completeSideQuestsButton({
+class CompleteSideQuestsButton extends StatelessWidget {
+  const CompleteSideQuestsButton({
     Key? key,
   }) : super(key: key);
 
@@ -69,11 +118,32 @@ class completeSideQuestsButton extends StatelessWidget {
   }
 }
 
-class newSideQuestButton extends StatelessWidget {
-  const newSideQuestButton({super.key});
+class NewSideQuestButton extends StatefulWidget {
+  final Box<SubTaskModel> db;
+  const NewSideQuestButton({
+    super.key,
+    required this.db,
+  });
+
+  @override
+  State<NewSideQuestButton> createState() => _NewSideQuestButtonState();
+}
+
+class _NewSideQuestButtonState extends State<NewSideQuestButton> {
+  final questNameController = TextEditingController();
+  final expAmountController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    questNameController.dispose();
+    expAmountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final Box<SubTaskModel> subDB = widget.db;
     return GestureDetector(
         onTap: () {
           showDialog(
@@ -90,6 +160,7 @@ class newSideQuestButton extends StatelessWidget {
                                     color: Color.fromRGBO(253, 211, 152, 1.0))),
                             Container(height: 5),
                             TextField(
+                              controller: questNameController,
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 filled: true,
@@ -104,6 +175,10 @@ class newSideQuestButton extends StatelessWidget {
                                     color: Color.fromRGBO(253, 211, 152, 1.0))),
                             Container(height: 5),
                             TextField(
+                              controller: expAmountController,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
@@ -123,7 +198,20 @@ class newSideQuestButton extends StatelessWidget {
                             onPressed: () => Navigator.pop(context)),
                         TextButton(
                             child: const Text('Confirm'),
-                            onPressed: () => Navigator.pop(context))
+                            onPressed: () {
+                              setState(() {
+                                subDB.add(
+                                  SubTaskModel(
+                                    subTaskName: questNameController.text,
+                                    exp: int.parse(expAmountController.text),
+                                    completed: false,
+                                  ),
+                                );
+                                questNameController.clear();
+                                expAmountController.clear();
+                              });
+                              Navigator.pop(context);
+                            })
                       ]));
         },
         child: Image.asset('images/add_button.png'));

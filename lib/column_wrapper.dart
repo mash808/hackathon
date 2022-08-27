@@ -9,9 +9,9 @@ class ColumnWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: FractionallySizedBox(
-        widthFactor: 0.8,
-        child: child,
+      child: Container(
+        width: MediaQuery.of(context).size.width - 90,
+        child: SingleChildScrollView(child: child),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/models/sub_task_model.dart';
+import 'package:hackathon_app/side_quest_screen/side_quests.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -25,24 +26,28 @@ class DisplaySubQuests extends StatelessWidget {
           itemBuilder: (_, index) {
             final int key = keys[index];
             final SubTaskModel? data = items.get(key);
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              color: Colors.blueGrey[200],
-              child: ListTile(
-                title: Text(
-                  data!.subTaskName,
-                  style: TextStyle(fontSize: 22, color: Colors.black),
-                ),
-                subtitle: Text(data.completed.toString(),
-                    style: TextStyle(fontSize: 20, color: Colors.black38)),
-                leading: Text(
-                  "$key",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-              ),
+            return IndividualQuests(
+              exp: data!.exp,
+              sideQuestName: data.subTaskName,
             );
+            // return Card(
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(15.0),
+            //   ),
+            //   color: Colors.blueGrey[200],
+            //   child: ListTile(
+            //     title: Text(
+            //       data!.subTaskName,
+            //       style: TextStyle(fontSize: 22, color: Colors.black),
+            //     ),
+            //     subtitle: Text(data.completed.toString(),
+            //         style: TextStyle(fontSize: 20, color: Colors.black38)),
+            //     leading: Text(
+            //       "$key",
+            //       style: TextStyle(fontSize: 18, color: Colors.black),
+            //     ),
+            //   ),
+            // );
           },
         );
       },
