@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hackathon_app/column_wrapper.dart';
+import 'package:hackathon_app/models/sub_task_model.dart';
+import 'package:hackathon_app/side_quest_screen/display_sub_quests.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
 class Quests extends StatefulWidget {
   const Quests({Key? key}) : super(key: key);
@@ -9,19 +14,25 @@ class Quests extends StatefulWidget {
 }
 
 class _QuestsState extends State<Quests> {
-  Color myBoxColor = Colors.green;
+  // var mainQuestBox = Hive.box('mainQuestDb');
+  Box<SubTaskModel> sideQuestDB = Hive.box('sideQuestDB');
 
   @override
   Widget build(BuildContext context) {
     return ColumnWrapper(
       child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Image.asset('images/quests_screen_banner.png', scale: 0.8),
-          ),
-        ],
+        children: [],
       ),
     );
+  }
+}
+
+class addMainQuests extends StatelessWidget {
+  const addMainQuests({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {}, child: Image.asset('images/add_quest.png'));
   }
 }
