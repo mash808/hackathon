@@ -98,7 +98,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                margin: const EdgeInsets.all(20.0),
+                margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   child: const Text('Create Account'),
