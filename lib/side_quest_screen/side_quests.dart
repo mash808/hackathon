@@ -30,22 +30,6 @@ class _SideQuestsState extends State<SideQuests> {
                 NewSideQuestButton(
                   db: sideQuestDB,
                 ),
-                GestureDetector(
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.pink,
-                  ),
-                  onTap: () {
-                    sideQuestDB.add(
-                      SubTaskModel(
-                        subTaskName: 'kill chickens',
-                        exp: 1,
-                        completed: false,
-                      ),
-                    );
-                  },
-                ),
               ],
             ),
           )
