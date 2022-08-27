@@ -40,7 +40,7 @@ class individualQuests extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('images/side_quests_icon.png'),
+          completeSideQuestsButton(),
           Container(width: (MediaQuery.of(context).size.width * 0.025)),
           Container(
               width: (MediaQuery.of(context).size.width * 0.65),
@@ -57,6 +57,20 @@ class individualQuests extends StatelessWidget {
   }
 }
 
+class completeSideQuestsButton extends StatelessWidget {
+  const completeSideQuestsButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {},
+        child: Image.asset(
+            'images/side_quests_icon.png')); // Can make this image darker if not completed??
+  }
+}
+
 class newSideQuestButton extends StatelessWidget {
   const newSideQuestButton({super.key});
 
@@ -70,6 +84,7 @@ class newSideQuestButton extends StatelessWidget {
                       title: const Text('Create Side Quest'),
                       backgroundColor: Color.fromRGBO(247, 235, 209, 1.0),
                       content: Container(
+                        height: (MediaQuery.of(context).size.height / 4),
                         child: Column(
                           children: [
                             const Text('Quest Name:',
