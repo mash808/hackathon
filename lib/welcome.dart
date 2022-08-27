@@ -13,6 +13,13 @@ class WelcomeScreen extends ConsumerStatefulWidget {
 }
 
 class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
+  final userNameController = TextEditingController();
+  @override
+  void dispose() {
+    userNameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final loggedIn = ref.watch(globalProvider);
@@ -40,6 +47,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                                   color: Color.fromRGBO(253, 211, 152, 1.0))),
                           Container(height: 5),
                           TextField(
+                            controller: userNameController,
                             decoration: InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
@@ -79,8 +87,20 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                     Container(
                       child: ElevatedButton(
                         onPressed: () {
-                          ref.read(globalProvider.notifier).logIn();
-                          ref.read(indexProvider.notifier).updateIndex(0);
+                          setState(() {
+                            ref.read(globalProvider.notifier).logIn();
+                            if (userNameController.text == '') {
+                              ref
+                                  .read(nameProvider.notifier)
+                                  .setName('Guest123');
+                            } else {
+                              ref
+                                  .read(nameProvider.notifier)
+                                  .setName(userNameController.text);
+                            }
+                            ;
+                            ref.read(indexProvider.notifier).updateIndex(0);
+                          });
                         },
                         child: const Text('Login'),
                         style: TextButton.styleFrom(

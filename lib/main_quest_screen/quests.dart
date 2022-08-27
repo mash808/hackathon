@@ -30,7 +30,7 @@ class _QuestsState extends State<Quests> {
             Wrap(
                 alignment: WrapAlignment.spaceEvenly,
                 runSpacing: 10.0,
-                children: [
+                children: const [
                   MainQuests(),
                   MainQuests(),
                   MainQuests(),
@@ -52,16 +52,20 @@ class MainQuests extends StatelessWidget {
     return Column(
       children: [
         Offstage(
-            offstage: 1 != 0, // the database value is not veryeasy,
-            child: Column(children: [
-              GestureDetector(
-                  onTap: () {},
-                  child: Image.asset('images/very_easy_boss.png')),
-              const Text(
-                'The Name of the thingy',
-                style: TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0)),
-              )
-            ])),
+            offstage: 1 != 1, // the database value is not veryeasy,
+            child: Container(
+              constraints: BoxConstraints(
+                  maxWidth: ((MediaQuery.of(context).size.height - 90) / 2)),
+              child: Column(children: [
+                GestureDetector(
+                    onTap: () {},
+                    child: Image.asset('images/very_easy_boss.png')),
+                const Text(
+                  'The Name of the thingy',
+                  style: TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0)),
+                )
+              ]),
+            )),
         Offstage(
             offstage: 1 != 0, // the database value is not veryeasy,
             child: Column(children: [
@@ -73,7 +77,7 @@ class MainQuests extends StatelessWidget {
               )
             ])),
         Offstage(
-            offstage: 1 != 1, // the database value is not veryeasy,
+            offstage: 1 != 0, // the database value is not veryeasy,
             child: Column(children: [
               GestureDetector(
                   onTap: () {}, child: Image.asset('images/medium_boss.png')),

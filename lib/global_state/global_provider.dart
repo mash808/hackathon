@@ -8,6 +8,17 @@ final indexProvider = StateNotifierProvider<PageIndex, int>((ref) {
   return PageIndex();
 });
 
+final nameProvider = StateNotifierProvider<SetName, String>((ref) {
+  return SetName();
+});
+
+class SetName extends StateNotifier<String> {
+  SetName() : super('Guest123');
+  void setName(String username) {
+    state = username;
+  }
+}
+
 class PageIndex extends StateNotifier<int> {
   PageIndex() : super(3);
   void updateIndex(int index) {
@@ -24,5 +35,4 @@ class LoggedIn extends StateNotifier<bool> {
   void logout() {
     state = false;
   }
-  
 }
