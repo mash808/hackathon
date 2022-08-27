@@ -19,6 +19,10 @@ class _QuestsState extends State<Quests> {
         ),
         body: Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: Text('Quests', style: TextStyle(fontSize: 26)),
+            ),
             const DoubleRowBoxes(
               box1color: Colors.black,
               box2color: Colors.amber,

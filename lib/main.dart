@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/quests.dart';
+import 'package:hackathon_app/side_quests.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: const MyHome(),
       routes: {
-        '/move': (context) => const Quests(),
+        '/quests': (context) => const Quests(),
+        '/side_quests': (context) => const SideQuests()
       },
     );
   }
@@ -31,7 +33,10 @@ class MyHome extends StatelessWidget {
       body: Center(
         child: GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, "/move");
+            Navigator.pushNamed(context, "/quests");
+          },
+          onDoubleTap: () {
+            Navigator.pushNamed(context, '/side_quests');
           },
           child: Container(
             width: 100,
