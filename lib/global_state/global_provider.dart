@@ -17,7 +17,7 @@ final expLevel = StateNotifierProvider<SetLevel, int>((ref) {
 });
 
 class SetLevel extends StateNotifier<int> {
-  SetLevel() : super(0);
+  SetLevel() : super(3250);
   void setLevel(int level) {
     state = level;
   }
