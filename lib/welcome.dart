@@ -75,7 +75,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                         ],
                       ),
                     ),
-                    Container(height: 5),
+                    Container(height: 10),
                     Container(
                       child: ElevatedButton(
                         onPressed: () {
@@ -92,38 +92,20 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   ],
                 )),
           ),
-          Container(height: 20),
+          Container(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
+                margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('sign up'),
+                  child: const Text('Create Account'),
                   style: TextButton.styleFrom(
                     primary: Colors.black,
                     backgroundColor: Color.fromRGBO(253, 211, 152, 1.0),
                   ),
-                ),
-              ),
-              Container(
-                child: TextButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                                title: const Text('Forgot Password'),
-                                content: const Text('Remember next time :)'),
-                                actions: [
-                                  TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () => Navigator.pop(context))
-                                ]));
-                  },
-                  child: const Text('Forgot Password',
-                      style:
-                          TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0))),
                 ),
               ),
             ],
