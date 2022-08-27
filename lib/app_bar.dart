@@ -18,6 +18,7 @@ class _ProfileAppBarState extends State<ProfileAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: const Color.fromRGBO(72, 63, 51, 1), //(0x3E3529),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
