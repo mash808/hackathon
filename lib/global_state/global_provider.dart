@@ -12,6 +12,17 @@ final nameProvider = StateNotifierProvider<SetName, String>((ref) {
   return SetName();
 });
 
+final expLevel = StateNotifierProvider<SetLevel, int>((ref) {
+  return SetLevel();
+});
+
+class SetLevel extends StateNotifier<int> {
+  SetLevel() : super(0);
+  void setLevel(int newLevel) {
+    state = newLevel;
+  }
+}
+
 class SetName extends StateNotifier<String> {
   SetName() : super('Guest123');
   void setName(String username) {

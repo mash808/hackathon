@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/column_wrapper.dart';
 import 'package:hackathon_app/global_state/global_provider.dart';
 import 'package:hackathon_app/profile_screen/profile.dart';
+import 'package:hackathon_app/constants.dart';
 
 class Profile extends ConsumerStatefulWidget {
   // final Function handleTap;
@@ -20,6 +21,7 @@ class _ProfileState extends ConsumerState<Profile> {
   Widget build(BuildContext context) {
     final loggedIn = ref.watch(globalProvider);
     final pageIndex = ref.watch(indexProvider);
+    final expcount = ref.watch(expLevel.notifier).state;
     return ColumnWrapper(
         child: Column(
       children: [
@@ -27,12 +29,22 @@ class _ProfileState extends ConsumerState<Profile> {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           children: [
+            Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Total EXP: ',
+                      style: TextStyle(color: kTextCream)),
+                  Text(expcount.toString(), style: TextStyle(color: kTextCream))
+                ],
+              ),
+              Container(height: 5),
+              XPRow(),
+            ]),
+            const SizedBox(height: 40, width: 10),
             const SizedBox(height: 40, width: 10),
             ProfileHeader(
                 label: " profile ", imageAddress: "images/character.png"),
-            const SizedBox(height: 40, width: 10),
-            XPRow(),
-            const SizedBox(height: 40, width: 10),
             ProfileHeader(
                 label: " settings ", imageAddress: "images/character.png"),
             const SizedBox(height: 40, width: 10),
@@ -41,8 +53,7 @@ class _ProfileState extends ConsumerState<Profile> {
             const SizedBox(height: 40, width: 10),
             Text(
               "Achievements",
-              style: TextStyle(
-                  fontSize: 20, color: Color.fromARGB(255, 253, 211, 152)),
+              style: TextStyle(fontSize: 20, color: kTextCream),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -84,11 +95,11 @@ class ProfileHeader extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               border: Border.all(
-                color: Color.fromARGB(255, 253, 211, 152),
+                color: kTextCream,
               ),
               borderRadius: BorderRadius.horizontal(
                   left: Radius.zero, right: Radius.circular(3)),
-              color: Color.fromARGB(255, 253, 211, 152)),
+              color: kTextCream),
           alignment: Alignment.center,
           child: Text(label),
         ),
