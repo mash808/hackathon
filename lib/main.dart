@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon_app/profile.dart';
 import 'package:hackathon_app/quests.dart';
 import 'package:hackathon_app/side_quests.dart';
 
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
       home: const MyHome(),
       routes: {
         '/quests': (context) => const Quests(),
-        '/side_quests': (context) => const SideQuests()
+        '/side_quests': (context) => const SideQuests(),
+        '/profile': (context) => const Profile()
       },
     );
   }
@@ -37,6 +39,9 @@ class MyHome extends StatelessWidget {
           },
           onDoubleTap: () {
             Navigator.pushNamed(context, '/side_quests');
+          },
+          onLongPress: () {
+            Navigator.pushNamed(context, '/profile');
           },
           child: Container(
             width: 100,
