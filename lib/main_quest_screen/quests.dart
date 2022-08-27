@@ -96,3 +96,13 @@ class DisplaySubQuests extends StatelessWidget {
     );
   }
 }
+
+class addMainQuests extends StatelessWidget {
+  const addMainQuests({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {}, child: Image.asset('images/add_quest.png'));
+  }
+}
