@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hackathon_app/column_wrapper.dart';
+import 'package:hackathon_app/models/main_quest.dart';
 import 'package:hackathon_app/models/sub_task_model.dart';
-import 'package:hackathon_app/side_quest_screen/display_sub_quests.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -14,7 +13,7 @@ class Quests extends StatefulWidget {
 }
 
 class _QuestsState extends State<Quests> {
-  // var mainQuestBox = Hive.box('mainQuestDb');
+  Box<MainQuestModel> mainQuestDB = Hive.box('mainQuestDB');
   Box<SubTaskModel> sideQuestDB = Hive.box('sideQuestDB');
 
   @override
@@ -30,12 +29,12 @@ class _QuestsState extends State<Quests> {
             Wrap(
                 alignment: WrapAlignment.spaceEvenly,
                 runSpacing: 10.0,
-                children: const [
+                children: [
                   MainQuests(),
                   MainQuests(),
                   MainQuests(),
                   MainQuests(),
-                  addMainQuests()
+                  addMainQuests(db: mainQuestDB),
                 ])
           ],
         ),
@@ -113,7 +112,11 @@ class MainQuests extends StatelessWidget {
 }
 
 class addMainQuests extends StatefulWidget {
-  const addMainQuests({super.key});
+  final Box<MainQuestModel> db;
+  const addMainQuests({
+    super.key,
+    required this.db,
+  });
 
   @override
   State<addMainQuests> createState() => _addMainQuestsState();
@@ -122,9 +125,20 @@ class addMainQuests extends StatefulWidget {
 enum boss { veryeasy, easy, medium, hard, veryhard }
 
 class _addMainQuestsState extends State<addMainQuests> {
+  final mainQuestNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    mainQuestNameController.dispose();
+    super.dispose();
+  }
+
   boss? _level = boss.medium;
+
   @override
   Widget build(BuildContext context) {
+    final Box<MainQuestModel> mainDB = widget.db;
+
     return GestureDetector(
         onTap: () {
           showDialog(
@@ -144,6 +158,7 @@ class _addMainQuestsState extends State<addMainQuests> {
                               Container(height: 5),
                               Container(height: 5),
                               TextField(
+                                controller: mainQuestNameController,
                                 decoration: InputDecoration(
                                   fillColor: Colors.white,
                                   filled: true,
@@ -217,7 +232,30 @@ class _addMainQuestsState extends State<addMainQuests> {
                             onPressed: () => Navigator.pop(context)),
                         TextButton(
                             child: const Text('Confirm'),
-                            onPressed: () => Navigator.pop(context))
+                            onPressed: () {
+                              mainDB.add(MainQuestModel(
+                                  mainQuestIcon:
+                                      Image.asset('images/easy_boss.png'),
+                                  mainQuestName: mainQuestNameController.text,
+                                  subTasks: <SubTaskModel>[
+                                    SubTaskModel(
+                                        subTaskName: 'task 1',
+                                        exp: 5,
+                                        completed: false),
+                                    SubTaskModel(
+                                        subTaskName: 'task 2',
+                                        exp: 10,
+                                        completed: false),
+                                    SubTaskModel(
+                                        subTaskName: 'task 3',
+                                        exp: 50,
+                                        completed: false)
+                                  ],
+                                  exp: 250,
+                                  completed: false));
+                              mainQuestNameController.clear();
+                              Navigator.pop(context);
+                            })
                       ]));
         },
         child: Image.asset('images/add_quest.png'));

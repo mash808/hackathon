@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/app_bar.dart';
-import 'package:hackathon_app/constants.dart';
 import 'package:hackathon_app/global_state/global_provider.dart';
 import 'package:hackathon_app/main_quest_screen/quests.dart';
 import 'package:hackathon_app/models/main_quest.dart';
@@ -12,12 +11,11 @@ import 'package:hackathon_app/side_quest_screen/side_quests.dart';
 import 'package:hackathon_app/welcome.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(SubTaskModelAdapter());
-  // await Hive.openBox<MainQuestModel>('mainQuestDB');
+  await Hive.openBox<MainQuestModel>('mainQuestDB');
   await Hive.openBox<SubTaskModel>('sideQuestDB');
   runApp(const ProviderScope(child: MyApp()));
 }
