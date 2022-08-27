@@ -50,9 +50,26 @@ class _ProfileState extends ConsumerState<Profile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Total EXP: ',
-                      style: TextStyle(color: kTextCream)),
-                  Text(expcount.toString(), style: TextStyle(color: kTextCream))
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Text('Total EXP: ',
+                              style: TextStyle(color: kTextCream)),
+                          Text(expcount.toString(),
+                              style: TextStyle(color: kTextCream)),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text('EXP to next Level: ',
+                              style: TextStyle(color: kTextCream)),
+                          Text((200 - (expcount % 200)).toString(),
+                              style: TextStyle(color: kTextCream)),
+                        ],
+                      ),
+                    ],
+                  )
                 ],
               ),
               Container(height: 5),
