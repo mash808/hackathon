@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/app_bar.dart';
 import 'package:hackathon_app/constants.dart';
+import 'package:hackathon_app/global_state/global_provider.dart';
 import 'package:hackathon_app/main_quest_screen/quests.dart';
 import 'package:hackathon_app/nav_bar_bottom.dart';
 import 'package:hackathon_app/profile_screen/profile.dart';
@@ -8,7 +10,7 @@ import 'package:hackathon_app/side_quest_screen/side_quests.dart';
 import 'package:hackathon_app/welcome.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -21,20 +23,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MyHome(),
     );
   }
 }
 
-class MyHome extends StatefulWidget {
+class MyHome extends ConsumerStatefulWidget {
   const MyHome({Key? key}) : super(key: key);
 
   @override
-  State<MyHome> createState() => _MyHomeState();
+  ConsumerState<MyHome> createState() => _MyHomeState();
 }
 
-class _MyHomeState extends State<MyHome> {
+class _MyHomeState extends ConsumerState<MyHome> {
   final List<Widget> _pages = <Widget>[
     const Quests(),
     const SideQuests(),
@@ -45,6 +47,8 @@ class _MyHomeState extends State<MyHome> {
 
   @override
   Widget build(BuildContext context) {
+    final loggedIn = ref.watch(globalProvider);
+    final pageIndex = ref.watch(indexProvider);
     return Scaffold(
       appBar: ProfileAppBar(),
       body: Container(
@@ -56,15 +60,19 @@ class _MyHomeState extends State<MyHome> {
             fit: BoxFit.cover,
           ),
         ),
-        child: _pages.elementAt(_selectedIndex),
+        // child: _pages.elementAt(_selectedIndex),
+        child: _pages.elementAt(pageIndex),
       ),
-      bottomNavigationBar: NavBarBottom(
-        handleTap: (newValue) {
-          setState(() {
-            _selectedIndex = newValue;
-          });
-        },
-      ),
+      bottomNavigationBar: (loggedIn)
+          ? NavBarBottom(
+              handleTap: (newValue) {
+                setState(() {
+                  // _selectedIndex = newValue;
+                  ref.read(indexProvider.notifier).updateIndex(newValue);
+                });
+              },
+            )
+          : null,
     );
   }
 }

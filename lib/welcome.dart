@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/column_wrapper.dart';
+import 'package:hackathon_app/global_state/global_provider.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerStatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
+  ConsumerState<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
+  @override
   Widget build(BuildContext context) {
+    final loggedIn = ref.watch(globalProvider);
     return ColumnWrapper(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +78,10 @@ class WelcomeScreen extends StatelessWidget {
                     Container(height: 5),
                     Container(
                       child: ElevatedButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          ref.read(globalProvider.notifier).logIn();
+                          ref.read(indexProvider.notifier).updateIndex(0);
+                        },
                         child: const Text('Login'),
                         style: TextButton.styleFrom(
                           primary: Colors.black,
