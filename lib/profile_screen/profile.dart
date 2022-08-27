@@ -29,6 +29,23 @@ class _ProfileState extends ConsumerState<Profile> {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           children: [
+            Container(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Level: ',
+                    style: TextStyle(
+                        color: kTextCream,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold)),
+                Text((expcount ~/ 200).toString(),
+                    style: TextStyle(
+                        color: kTextCream,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold))
+              ],
+            )),
             Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -109,13 +126,19 @@ class ProfileHeader extends StatelessWidget {
 }
 
 // This widget contains the XP Bar and decorations
-class XPRow extends StatelessWidget {
+class XPRow extends ConsumerStatefulWidget {
   const XPRow({
     Key? key,
   }) : super(key: key);
 
   @override
+  ConsumerState<XPRow> createState() => _XPRowState();
+}
+
+class _XPRowState extends ConsumerState<XPRow> {
+  @override
   Widget build(BuildContext context) {
+    final expcount = ref.watch(expLevel.notifier).state;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -124,11 +147,11 @@ class XPRow extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(
                     color: Color.fromARGB(255, 43, 43, 43), width: 3)),
-            child: const LinearProgressIndicator(
+            child: LinearProgressIndicator(
               valueColor: AlwaysStoppedAnimation(Colors.blueAccent),
               backgroundColor: Color.fromARGB(255, 57, 57, 57),
               color: Color.fromARGB(255, 27, 134, 221),
-              value: 0.5,
+              value: ((expcount % 200) / 200),
               minHeight: 20,
             ))
       ],
