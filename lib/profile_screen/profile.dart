@@ -75,8 +75,6 @@ class _ProfileState extends ConsumerState<Profile> {
               Container(height: 5),
               XPRow(),
             ]),
-            const SizedBox(height: 40, width: 10),
-            const SizedBox(height: 40, width: 10),
             ProfileHeader(
                 label: " profile ", imageAddress: "images/character.png"),
             ProfileHeader(
@@ -90,7 +88,23 @@ class _ProfileState extends ConsumerState<Profile> {
               style: TextStyle(fontSize: 20, color: kTextCream),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
+            Container(
+                child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8.0,
+              children: [
+                Image.asset('images/very_hard_boss.png', scale: 2),
+                const Text('0', style: TextStyle(color: kTextCream)),
+                Image.asset('images/hard_boss.png', scale: 2),
+                const Text('5', style: TextStyle(color: kTextCream)),
+                Image.asset('images/medium_boss.png', scale: 2),
+                const Text('5', style: TextStyle(color: kTextCream)),
+                Image.asset('images/easy_boss.png', scale: 2),
+                const Text('5', style: TextStyle(color: kTextCream)),
+                Image.asset('images/very_easy_boss.png', scale: 2),
+                const Text('5', style: TextStyle(color: kTextCream)),
+              ],
+            )),
             GestureDetector(
               onTap: () {
                 setState(() {
