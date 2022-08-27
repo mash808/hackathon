@@ -16,7 +16,10 @@ class _QuestsState extends State<Quests> {
     return ColumnWrapper(
       child: Column(
         children: [
-          const Text('QUESTS PAGE - EDIT INSIDE THIS COLUMN'),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Image.asset('images/quests_screen_banner.png', scale: 0.8),
+          ),
         ],
       ),
     );
