@@ -20,21 +20,25 @@ class _QuestsState extends State<Quests> {
   @override
   Widget build(BuildContext context) {
     return ColumnWrapper(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 5.0),
-            child: Image.asset('images/quests_screen_banner.png', width: 300),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(children: [MainQuests(), addMainQuests()]),
-              Column(children: [MainQuests(), addMainQuests()])
-            ],
-          )
-        ],
+      child: Container(
+        constraints:
+            BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset('images/quests_screen_banner.png', width: 300),
+            Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                runSpacing: 10.0,
+                children: [
+                  MainQuests(),
+                  MainQuests(),
+                  MainQuests(),
+                  MainQuests(),
+                  addMainQuests()
+                ])
+          ],
+        ),
       ),
     );
   }
@@ -45,17 +49,60 @@ class MainQuests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
         Offstage(
-            offstage: 1 != 1, // the database value is not veryeasy,
+            offstage: 1 != 0, // the database value is not veryeasy,
             child: Column(children: [
-              Image.asset('images/very_easy_boss.png'),
+              GestureDetector(
+                  onTap: () {},
+                  child: Image.asset('images/very_easy_boss.png')),
               const Text(
                 'The Name of the thingy',
                 style: TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0)),
               )
-            ]))
+            ])),
+        Offstage(
+            offstage: 1 != 0, // the database value is not veryeasy,
+            child: Column(children: [
+              GestureDetector(
+                  onTap: () {}, child: Image.asset('images/easy_boss.png')),
+              const Text(
+                'The Name of the thingy',
+                style: TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0)),
+              )
+            ])),
+        Offstage(
+            offstage: 1 != 1, // the database value is not veryeasy,
+            child: Column(children: [
+              GestureDetector(
+                  onTap: () {}, child: Image.asset('images/medium_boss.png')),
+              const Text(
+                'The Name of the thingy',
+                style: TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0)),
+              )
+            ])),
+        Offstage(
+            offstage: 1 != 0, // the database value is not veryeasy,
+            child: Column(children: [
+              GestureDetector(
+                  onTap: () {}, child: Image.asset('images/hard_boss.png')),
+              const Text(
+                'The Name of the thingy',
+                style: TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0)),
+              )
+            ])),
+        Offstage(
+            offstage: 1 != 0, // the database value is not veryeasy,
+            child: Column(children: [
+              GestureDetector(
+                  onTap: () {},
+                  child: Image.asset('images/very_hard_boss.png')),
+              const Text(
+                'The Name of the thingy',
+                style: TextStyle(color: Color.fromRGBO(253, 211, 152, 1.0)),
+              )
+            ])),
       ],
     );
   }
