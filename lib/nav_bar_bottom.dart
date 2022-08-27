@@ -17,7 +17,7 @@ class _NavBarBottomState extends State<NavBarBottom> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 56,
+      height: 70,
       decoration: const BoxDecoration(color: kOsrsBrown),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -26,18 +26,21 @@ class _NavBarBottomState extends State<NavBarBottom> {
             onTap: () => widget.handleTap(0),
             child: Image.asset(
               'images/quests.png',
+              scale: 0.6,
             ),
           ),
           GestureDetector(
             onTap: () => widget.handleTap(1),
             child: Image.asset(
               'images/book.png',
+              scale: 0.6,
             ),
           ),
           GestureDetector(
             onTap: () => widget.handleTap(2),
             child: Image.asset(
               'images/character.png',
+              scale: 0.6,
             ),
           ),
         ],

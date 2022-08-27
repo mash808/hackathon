@@ -9,7 +9,9 @@ class SideQuests extends StatelessWidget {
     return ColumnWrapper(
       child: Column(
         children: [
-          const Text('SIDE QUESTS PAGE - EDIT INSIDE THIS COLUMN'),
+          const Text('Place SideQuests logo here'),
+          Image.asset('images/book.png'), //
+
         ],
       ),
     );
