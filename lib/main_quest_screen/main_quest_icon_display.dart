@@ -57,7 +57,7 @@ class MainQuestIconDisplay extends StatelessWidget {
                             ),
                             DisplayMainQuestSubQuests(
                               db: Boxes.getMainQuests(),
-                              index: index,
+                              indexMainQuest: index,
                             )
                           ],
                         ),

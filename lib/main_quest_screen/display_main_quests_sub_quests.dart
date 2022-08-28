@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hackathon_app/global_state/global_provider.dart';
 import 'package:hackathon_app/main.dart';
+import 'package:hackathon_app/models/boxes.dart';
 import 'package:hackathon_app/models/main_quest.dart';
 import 'package:hackathon_app/models/sub_task_model.dart';
 import 'package:hackathon_app/side_quest_screen/side_quests.dart';
@@ -8,11 +11,11 @@ import 'package:hive_flutter/adapters.dart';
 
 class DisplayMainQuestSubQuests extends StatelessWidget {
   Box<MainQuestModel> db;
-  final int index;
+  final int indexMainQuest;
   DisplayMainQuestSubQuests({
     Key? key,
     required this.db,
-    required this.index,
+    required this.indexMainQuest,
   }) : super(key: key);
 
   @override
@@ -20,7 +23,7 @@ class DisplayMainQuestSubQuests extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: db.listenable(),
       builder: (context, Box<MainQuestModel> items, _) {
-        MainQuestModel? mainQuest = items.getAt(index);
+        MainQuestModel? mainQuest = items.getAt(indexMainQuest);
         print(mainQuest!.mainQuestName);
 
         List<SubTaskModel> subTasks = mainQuest.subTasks;
@@ -43,6 +46,8 @@ class DisplayMainQuestSubQuests extends StatelessWidget {
             final SubTaskModel? data = subTasks[index];
             return MainQuestIndividualTasks(
               // index: index,
+              indexMainQuest: indexMainQuest,
+              indexSubTask: index,
               exp: data!.exp,
               sideQuestName: data.subTaskName,
             );
@@ -56,12 +61,15 @@ class DisplayMainQuestSubQuests extends StatelessWidget {
 class MainQuestIndividualTasks extends StatefulWidget {
   final String sideQuestName;
   final int exp;
-  // final int? index;
+  final int indexMainQuest;
+  final int indexSubTask;
 
   const MainQuestIndividualTasks({
     super.key,
     required this.exp,
     required this.sideQuestName,
+    required this.indexMainQuest,
+    required this.indexSubTask,
     // this.index,
   });
 
@@ -78,9 +86,10 @@ class _MainQuestIndividualTasksState extends State<MainQuestIndividualTasks> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // CompleteSideQuestsButton(
-            //   index: widget.index,
-            // ),
+            CompleteSubTaskOfMainQuest(
+              indexMainTask: widget.indexMainQuest,
+              indexSubTask: widget.indexSubTask,
+            ),
             Container(width: (MediaQuery.of(context).size.width * 0.025)),
             Container(
                 width: (MediaQuery.of(context).size.width * 0.6),
@@ -108,5 +117,83 @@ class _MainQuestIndividualTasksState extends State<MainQuestIndividualTasks> {
                 ))
           ],
         ));
+  }
+}
+
+class CompleteSubTaskOfMainQuest extends ConsumerStatefulWidget {
+  final int indexMainTask;
+  final int indexSubTask;
+  const CompleteSubTaskOfMainQuest({
+    Key? key,
+    required this.indexMainTask,
+    required this.indexSubTask,
+  }) : super(key: key);
+
+  @override
+  ConsumerState<CompleteSubTaskOfMainQuest> createState() =>
+      _CompleteSubTaskOfMainQuestState();
+}
+
+class _CompleteSubTaskOfMainQuestState
+    extends ConsumerState<CompleteSubTaskOfMainQuest> {
+  @override
+  Widget build(BuildContext context) {
+    Box<MainQuestModel> mainQuestBox = Boxes.getMainQuests();
+    MainQuestModel? mainQuestCopy = mainQuestBox.getAt(widget.indexMainTask);
+    SubTaskModel subTaskCopy =
+        mainQuestBox.getAt(widget.indexMainTask)!.subTasks[widget.indexSubTask];
+    return GestureDetector(
+        onTap: () {
+          // if (data.get(widget.index)!.completed == false) {
+          if (subTaskCopy.completed == false) {
+            SubTaskModel subTaskComplete = SubTaskModel(
+                completed: true,
+                exp: subTaskCopy.exp,
+                subTaskName: subTaskCopy.subTaskName);
+            List<SubTaskModel> subTasksNew = mainQuestCopy!.subTasks;
+            subTasksNew[widget.indexSubTask] = subTaskComplete;
+
+            mainQuestBox.putAt(
+              widget.indexMainTask,
+              MainQuestModel(
+                  mainQuestIconPath: mainQuestCopy.mainQuestIconPath,
+                  mainQuestName: mainQuestCopy.mainQuestName,
+                  subTasks: subTasksNew,
+                  exp: mainQuestCopy.exp,
+                  completed: mainQuestCopy.completed),
+            );
+            var exp_new = subTaskComplete.exp;
+            ref.read(expLevel.notifier).increaseLevel(exp_new);
+          } else {
+            SubTaskModel subTaskUnComplete = SubTaskModel(
+                completed: false,
+                exp: subTaskCopy.exp,
+                subTaskName: subTaskCopy.subTaskName);
+            List<SubTaskModel> subTasksNew = mainQuestCopy!.subTasks;
+            subTasksNew[widget.indexSubTask] = subTaskUnComplete;
+
+            mainQuestBox.putAt(
+              widget.indexMainTask,
+              MainQuestModel(
+                  mainQuestIconPath: mainQuestCopy.mainQuestIconPath,
+                  mainQuestName: mainQuestCopy.mainQuestName,
+                  subTasks: subTasksNew,
+                  exp: mainQuestCopy.exp,
+                  completed: mainQuestCopy.completed),
+            );
+
+            var exp_new = subTaskUnComplete.exp;
+            ref.read(expLevel.notifier).increaseLevel(-exp_new);
+            // var exp_new = data.get(widget.index);
+            // ref.read(expLevel.notifier).increaseLevel(-exp_new!.exp);
+          }
+        },
+        child: (mainQuestBox
+                .getAt(widget.indexMainTask)!
+                .subTasks[widget.indexSubTask]
+                .completed) // (data.get(widget.index)!.completed == true)
+            ? Image.asset('images/side_quests_icon_dark.png')
+            : Image.asset(
+                'images/side_quests_icon.png')); // Can make this image darker if not completed??
   }
 }
