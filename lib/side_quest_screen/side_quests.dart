@@ -146,7 +146,7 @@ class _CompleteSideQuestsButtonState
           }
         },
         onDoubleTap: () {
-          data.deleteAt(widget.index);
+          data.deleteAt(widget.index!);
         },
         child: (data.get(widget.index)!.completed == true)
             ? Image.asset('images/side_quests_icon_dark.png')
