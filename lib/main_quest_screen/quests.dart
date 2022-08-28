@@ -156,7 +156,8 @@ class _addMainQuestsState extends State<addMainQuests> {
                               const Text('Quest Name:',
                                   style: TextStyle(
                                       color:
-                                          Color.fromRGBO(253, 211, 152, 1.0))),
+                                            Colors.deepOrange,
+                                          )),
                               Container(height: 5),
                               Container(height: 5),
                               TextField(
@@ -173,7 +174,8 @@ class _addMainQuestsState extends State<addMainQuests> {
                               const Text('Pick Diffuculty Level:',
                                   style: TextStyle(
                                       color:
-                                          Color.fromRGBO(253, 211, 152, 1.0))),
+                                          Colors.deepOrange,
+                                          )),
                               Container(height: 5),
                               Column(
                                 children: [
