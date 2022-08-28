@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hackathon_app/constants.dart';
+import 'package:hackathon_app/main_quest_screen/display_main_quests_sub_quests.dart';
+import 'package:hackathon_app/models/boxes.dart';
 
 class MainQuestIconDisplay extends StatelessWidget {
   final String iconPath;
@@ -44,15 +46,19 @@ class MainQuestIconDisplay extends StatelessWidget {
                             Row(
                               children: [
                                 Text('HP: TODO HP'),
-                                Container(
-                                  width: 10,
-                                  child: LinearProgressIndicator(
-                                    backgroundColor: Colors.red,
-                                    color: Colors.lightGreen,
-                                  ),
-                                ),
+                                // Container(
+                                //   width: 10,
+                                //   child: LinearProgressIndicator(
+                                //     backgroundColor: Colors.red,
+                                //     color: Colors.lightGreen,
+                                //   ),
+                                // ),
                               ],
                             ),
+                            DisplayMainQuestSubQuests(
+                              db: Boxes.getMainQuests(),
+                              index: index,
+                            )
                           ],
                         ),
                       ),

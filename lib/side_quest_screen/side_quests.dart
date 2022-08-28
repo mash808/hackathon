@@ -20,39 +20,47 @@ class _SideQuestsState extends State<SideQuests> {
   @override
   Widget build(BuildContext context) {
     return ColumnWrapper(
-      child: Column(
-        children: [
-          Image.asset('images/side_quests_book.png',
-              height: (MediaQuery.of(context).size.height / 4)),
-          FractionallySizedBox(
-            widthFactor: 0.95,
-            child: Column(
-              children: [
-                DisplaySubQuests(db: sideQuestDB),
-                NewSideQuestButton(
-                  db: sideQuestDB,
-                ),
-              ],
-            ),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Image.asset('images/side_quests_book.png',
+                height: (MediaQuery.of(context).size.height / 4)),
+            FractionallySizedBox(
+              widthFactor: 0.95,
+              child: Column(
+                children: [
+                  DisplaySubQuests(db: sideQuestDB),
+                  NewSideQuestButton(
+                    db: sideQuestDB,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-class IndividualQuests extends StatelessWidget {
+class IndividualQuests extends StatefulWidget {
   final String sideQuestName;
   final int exp;
-  final int index;
+  final int? index;
 
   const IndividualQuests({
     super.key,
     required this.exp,
     required this.sideQuestName,
-    required this.index,
+    this.index,
   });
 
+  @override
+  State<IndividualQuests> createState() => _IndividualQuestsState();
+}
+
+class _IndividualQuestsState extends State<IndividualQuests> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,9 +69,9 @@ class IndividualQuests extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CompleteSideQuestsButton(
-            index: index,
+            index: widget.index,
           ),
-          Container(width: (MediaQuery.of(context).size.width * 0.025)),
+          Container(width: (MediaQuery.of(context).size.width * 0.010)),
           Container(
               width: (MediaQuery.of(context).size.width * 0.6),
               padding: const EdgeInsets.all(10),
@@ -75,13 +83,13 @@ class IndividualQuests extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    sideQuestName,
+                    widget.sideQuestName,
                     style: const TextStyle(
                       color: Color.fromRGBO(255, 184, 0, 1.0),
                     ),
                   ),
                   Text(
-                    'EXP: $exp',
+                    'EXP: ${widget.exp}',
                     style: const TextStyle(
                       color: Colors.lightGreen,
                     ),
@@ -95,10 +103,10 @@ class IndividualQuests extends StatelessWidget {
 }
 
 class CompleteSideQuestsButton extends ConsumerStatefulWidget {
-  final int index;
+  final int? index;
   CompleteSideQuestsButton({
     Key? key,
-    required this.index,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -117,7 +125,7 @@ class _CompleteSideQuestsButtonState
         onTap: () {
           if (data.get(widget.index)!.completed == false) {
             data.putAt(
-                widget.index,
+                widget.index!,
                 SubTaskModel(
                   subTaskName: data.get(widget.index)!.subTaskName,
                   exp: data.get(widget.index)!.exp,
@@ -127,7 +135,7 @@ class _CompleteSideQuestsButtonState
             ref.read(expLevel.notifier).increaseLevel(exp_new!.exp);
           } else {
             data.putAt(
-                widget.index,
+                widget.index!,
                 SubTaskModel(
                   subTaskName: data.get(widget.index)!.subTaskName,
                   exp: data.get(widget.index)!.exp,
@@ -186,7 +194,8 @@ class _NewSideQuestButtonState extends State<NewSideQuestButton> {
                           children: [
                             const Text('Quest Name:',
                                 style: TextStyle(
-                                    color: Color.fromRGBO(253, 211, 152, 1.0))),
+                                  color: Colors.deepOrange,
+                                )),
                             Container(height: 5),
                             TextField(
                               controller: questNameController,
@@ -202,7 +211,8 @@ class _NewSideQuestButtonState extends State<NewSideQuestButton> {
                             Container(height: 10),
                             const Text('XP Amount:',
                                 style: TextStyle(
-                                    color: Color.fromRGBO(253, 211, 152, 1.0))),
+                                  color: Colors.deepOrange,
+                                )),
                             Container(height: 5),
                             TextField(
                               controller: expAmountController,
