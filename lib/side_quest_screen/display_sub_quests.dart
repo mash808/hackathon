@@ -13,24 +13,60 @@ class DisplaySubQuests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: db.listenable(),
-      builder: (context, Box<SubTaskModel> items, _) {
-        List<int> keys = items.keys.cast<int>().toList();
-        return ListView.separated(
-          separatorBuilder: (_, index) => Divider(),
-          itemCount: keys.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (_, index) {
-            final int key = keys[index];
-            final SubTaskModel? data = items.get(key);
-            return IndividualQuests(
-              index: key,
-              exp: data!.exp,
-              sideQuestName: data.subTaskName,
-            );
+    return Column(children: [
+      ValueListenableBuilder(
+        valueListenable: db.listenable(),
+        builder: (context, Box<SubTaskModel> items, _) {
+          List<int> keys = items.keys.cast<int>().toList();
+          return ListView.separated(
+            separatorBuilder: (_, index) => Divider(),
+            itemCount: keys.length,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (_, index) {
+              final int key = keys[index];
+              final SubTaskModel? data = items.get(key);
+              if (!data!.completed) {
+                return IndividualQuests(
+                  index: key,
+                  exp: data.exp,
+                  sideQuestName: data.subTaskName,
+                );
+              } else {}
+              return Container(height: 0);
+            },
+          );
+        },
+      ),
+      ValueListenableBuilder(
+        valueListenable: db.listenable(),
+        builder: (context, Box<SubTaskModel> items, _) {
+          List<int> keys = items.keys.cast<int>().toList();
+          return ListView.separated(
+            separatorBuilder: (_, index) => Divider(),
+            itemCount: keys.length,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (_, index) {
+              final int key = keys[index];
+              final SubTaskModel? data = items.get(key);
+              if (data!.completed) {
+                return IndividualQuests(
+                  index: key,
+                  exp: data.exp,
+                  sideQuestName: data.subTaskName,
+                );
+              } else {}
+              return Container(height: 0);
+            },
+          );
+        },
+      )
+    ]);
+  }
+}
             // return Card(
             //   shape: RoundedRectangleBorder(
             //     borderRadius: BorderRadius.circular(15.0),
@@ -49,12 +85,7 @@ class DisplaySubQuests extends StatelessWidget {
             //     ),
             //   ),
             // );
-          },
-        );
-      },
-    );
-  }
-}
+
 
 /*
 GestureDetector(
