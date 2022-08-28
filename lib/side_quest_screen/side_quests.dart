@@ -137,6 +137,9 @@ class _CompleteSideQuestsButtonState
             ref.read(expLevel.notifier).increaseLevel(-exp_new!.exp);
           }
         },
+        onDoubleTap: () {
+          data.deleteAt(widget.index);
+        },
         child: (data.get(widget.index)!.completed == true)
             ? Image.asset('images/side_quests_icon_dark.png')
             : Image.asset(

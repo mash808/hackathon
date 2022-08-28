@@ -3,9 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/column_wrapper.dart';
 import 'package:hackathon_app/global_state/global_provider.dart';
 import 'package:hackathon_app/models/boxes.dart';
+import 'package:hackathon_app/models/sub_task_model.dart';
+import 'package:hackathon_app/models/main_quest.dart';
 import 'package:hackathon_app/profile_screen/display_achievements.dart';
 import 'package:hackathon_app/profile_screen/profile.dart';
 import 'package:hackathon_app/constants.dart';
+import 'package:hive/hive.dart';
 
 class Profile extends ConsumerStatefulWidget {
   // final Function handleTap;
@@ -19,6 +22,8 @@ class Profile extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<Profile> {
+  Box<SubTaskModel> sideQuestDB = Hive.box('sideQuestDB');
+  Box<MainQuestModel> mainQuestDB = Hive.box('mainQuestDB');
   @override
   Widget build(BuildContext context) {
     final loggedIn = ref.watch(globalProvider);
@@ -78,16 +83,106 @@ class _ProfileState extends ConsumerState<Profile> {
               XPRow(),
             ]),
             SizedBox(height: 40, width: 10),
-            ProfileHeader(
-              label: " Settings ",
-              imageAddress: "images/character.png",
-              fSize: 20,
+            GestureDetector(
+              child: ProfileHeader(
+                label: " Settings ",
+                imageAddress: "images/character.png",
+                fSize: 20,
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                            title: const Center(child: Text('Settings')),
+                            backgroundColor: Color.fromRGBO(247, 235, 209, 1.0),
+                            content: Container(
+                              height: 50,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('What would you like to reset?'),
+                                ],
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                  child: const Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }),
+                              TextButton(
+                                  child: const Text('Side Quests'),
+                                  onPressed: () {
+                                    sideQuestDB.clear();
+                                    Navigator.pop(context);
+                                  }),
+                              TextButton(
+                                  child: const Text('Main Quests'),
+                                  onPressed: () {
+                                    mainQuestDB.clear();
+                                    Navigator.pop(context);
+                                  })
+                            ]));
+              },
             ),
             const SizedBox(height: 40, width: 10),
-            ProfileHeader(
-              imageAddress: "images/missions.png",
-              label: " Help / FAQ ",
-              fSize: 20,
+            GestureDetector(
+              child: ProfileHeader(
+                imageAddress: "images/missions.png",
+                label: " Help / FAQ ",
+                fSize: 20,
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                            title: const Center(child: Text('Help')),
+                            backgroundColor: Color.fromRGBO(247, 235, 209, 1.0),
+                            content: Container(
+                              height: (MediaQuery.of(context).size.height / 4),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      'To earn EXP,  you must first set Quests!\n'),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('To set a main Quest, look for the'),
+                                      Image.asset('images/quests.png',
+                                          height: 40, width: 40),
+                                    ],
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('To set a side Quest, look for the'),
+                                      Image.asset('images/book.png',
+                                          height: 40, width: 40),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                            'Check your Level and EXP on the Profile Screen.\n\nTry and earn all the achievements by defeating the Quest Bosses.'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  })
+                            ]));
+              },
             ),
             const SizedBox(height: 40, width: 10),
             Text(
