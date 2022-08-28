@@ -27,6 +27,7 @@ class DisplaySubQuests extends StatelessWidget {
             final int key = keys[index];
             final SubTaskModel? data = items.get(key);
             return IndividualQuests(
+              index: key,
               exp: data!.exp,
               sideQuestName: data.subTaskName,
             );

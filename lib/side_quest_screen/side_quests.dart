@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/column_wrapper.dart';
 import 'package:hackathon_app/models/sub_task_model.dart';
+import 'package:hackathon_app/global_state/global_provider.dart';
 import 'package:hackathon_app/side_quest_screen/display_sub_quests.dart';
 import 'package:hive/hive.dart';
 
@@ -42,11 +44,13 @@ class _SideQuestsState extends State<SideQuests> {
 class IndividualQuests extends StatelessWidget {
   final String sideQuestName;
   final int exp;
+  final int index;
 
   const IndividualQuests({
     super.key,
     required this.exp,
     required this.sideQuestName,
+    required this.index,
   });
 
   @override
@@ -56,7 +60,9 @@ class IndividualQuests extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CompleteSideQuestsButton(),
+          CompleteSideQuestsButton(
+            index: index,
+          ),
           Container(width: (MediaQuery.of(context).size.width * 0.025)),
           Container(
               width: (MediaQuery.of(context).size.width * 0.6),
@@ -88,15 +94,29 @@ class IndividualQuests extends StatelessWidget {
   }
 }
 
-class CompleteSideQuestsButton extends StatelessWidget {
-  const CompleteSideQuestsButton({
+class CompleteSideQuestsButton extends ConsumerStatefulWidget {
+  final int index;
+  CompleteSideQuestsButton({
     Key? key,
+    required this.index,
   }) : super(key: key);
 
   @override
+  ConsumerState<CompleteSideQuestsButton> createState() =>
+      _CompleteSideQuestsButtonState();
+}
+
+class _CompleteSideQuestsButtonState
+    extends ConsumerState<CompleteSideQuestsButton> {
+  Box<SubTaskModel> data = Hive.box('sideQuestDB');
+  @override
   Widget build(BuildContext context) {
+    final globalExp = ref.watch(expLevel.notifier).state;
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          var exp_new = data.get(widget.index);
+          ref.read(expLevel.notifier).increaseLevel(exp_new!.exp);
+        },
         child: Image.asset(
             'images/side_quests_icon.png')); // Can make this image darker if not completed??
   }

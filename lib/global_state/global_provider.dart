@@ -21,6 +21,10 @@ class SetLevel extends StateNotifier<int> {
   void setLevel(int level) {
     state = level;
   }
+
+  void increaseLevel(int exp) {
+    state = state + exp;
+  }
 }
 
 class SetName extends StateNotifier<String> {
