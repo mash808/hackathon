@@ -106,6 +106,7 @@ class _ProfileState extends ConsumerState<Profile> {
                     Container(height: 10),
                     DisplayAchievements(
                       mainQuestDb: Boxes.getMainQuests(),
+                      sideQuestDb: Boxes.getSubTasks(),
                     ),
                     /*Wrap(
                       alignment: WrapAlignment.center,

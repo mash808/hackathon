@@ -142,7 +142,10 @@ class _addMainQuestsState extends State<addMainQuests> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                      title: const Text('Create Quest'),
+                      title: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: const Text('Create Quest'),
+                      ),
                       backgroundColor: Color.fromRGBO(247, 235, 209, 1.0),
                       content: StatefulBuilder(builder:
                           (BuildContext context, StateSetter setState) {
@@ -167,11 +170,14 @@ class _addMainQuestsState extends State<addMainQuests> {
                                   hintText: 'Complete Hackathon',
                                 ),
                               ),
-                              const Text('Pick Diffuculty Level:',
-                                  style: TextStyle(
-                                      color:
-                                          Colors.deepOrange,
-                                          )),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: const Text('Pick Diffuculty Level:',
+                                    style: TextStyle(
+                                        color:
+                                            Colors.deepOrange,
+                                            )),
+                              ),
                               Container(height: 5),
                               Column(
                                 children: [
