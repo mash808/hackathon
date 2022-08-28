@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hackathon_app/column_wrapper.dart';
 import 'package:hackathon_app/global_state/global_provider.dart';
+import 'package:hackathon_app/models/boxes.dart';
+import 'package:hackathon_app/profile_screen/display_achievements.dart';
 import 'package:hackathon_app/profile_screen/profile.dart';
 import 'package:hackathon_app/constants.dart';
 
@@ -75,13 +77,18 @@ class _ProfileState extends ConsumerState<Profile> {
               Container(height: 5),
               XPRow(),
             ]),
+            SizedBox(height: 40, width: 10),
             ProfileHeader(
-                label: " profile ", imageAddress: "images/character.png"),
-            ProfileHeader(
-                label: " settings ", imageAddress: "images/character.png"),
+              label: " Settings ",
+              imageAddress: "images/character.png",
+              fSize: 20,
+            ),
             const SizedBox(height: 40, width: 10),
             ProfileHeader(
-                imageAddress: "images/missions.png", label: " help / FAQ "),
+              imageAddress: "images/missions.png",
+              label: " Help / FAQ ",
+              fSize: 20,
+            ),
             const SizedBox(height: 40, width: 10),
             Text(
               "Achievements",
@@ -97,113 +104,35 @@ class _ProfileState extends ConsumerState<Profile> {
                 child: Column(
                   children: [
                     Container(height: 10),
-                    Wrap(
+                    DisplayAchievements(
+                      mainQuestDb: Boxes.getMainQuests(),
+                    ),
+                    /*Wrap(
                       alignment: WrapAlignment.center,
                       spacing: 50.0,
                       runSpacing: 5.0,
                       children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: 47,
-                              width: 47,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'images/very_hard_boss.png'),
-                                      fit: BoxFit.cover),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                            ),
-                            const Text('0',
-                                style: TextStyle(color: kTextCream)),
-                          ],
+                        AchievementIcon(
+                          imageAddress: 'images/very_hard_boss.png',
+                          achievementCount: 0,
                         ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 47,
-                              width: 47,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage('images/hard_boss.png'),
-                                      fit: BoxFit.cover),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                            ),
-                            const Text('5',
-                                style: TextStyle(color: kTextCream)),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 47,
-                              width: 47,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image:
-                                          AssetImage('images/medium_boss.png'),
-                                      fit: BoxFit.cover),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                            ),
-                            const Text('5',
-                                style: TextStyle(color: kTextCream)),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 47,
-                              width: 47,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage('images/easy_boss.png'),
-                                      fit: BoxFit.cover),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                            ),
-                            const Text('5',
-                                style: TextStyle(color: kTextCream)),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 47,
-                              width: 47,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'images/very_easy_boss.png'),
-                                      fit: BoxFit.cover),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                            ),
-                            const Text('5',
-                                style: TextStyle(color: kTextCream)),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 47,
-                              width: 47,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'images/side_quests_achievement.png'),
-                                      fit: BoxFit.cover),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                            ),
-                            const Text('15',
-                                style: TextStyle(color: kTextCream)),
-                          ],
-                        ),
+                        AchievementIcon(
+                            achievementCount: 5,
+                            imageAddress: 'images/hard_boss.png'),
+                        AchievementIcon(
+                            achievementCount: 5,
+                            imageAddress: 'images/medium_boss.png'),
+                        AchievementIcon(
+                            achievementCount: 5,
+                            imageAddress: 'images/easy_boss.png'),
+                        AchievementIcon(
+                            achievementCount: 5,
+                            imageAddress: 'images/very_easy_boss.png'),
+                        AchievementIcon(
+                            achievementCount: 15,
+                            imageAddress: 'images/side_quests_achievement.png')
                       ],
-                    ),
+                    ),*/
                     Container(height: 5)
                   ],
                 )),
@@ -227,13 +156,43 @@ class _ProfileState extends ConsumerState<Profile> {
   }
 }
 
+class AchievementIcon extends StatelessWidget {
+  final int achievementCount;
+  final String imageAddress;
+
+  const AchievementIcon(
+      {Key? key, required this.achievementCount, required this.imageAddress})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: 47,
+          width: 47,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(imageAddress), fit: BoxFit.cover),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+        ),
+        Text(achievementCount.toString(), style: TextStyle(color: kTextCream)),
+      ],
+    );
+  }
+}
+
 //This Widget contains the profile picture and title of the profile page
 class ProfileHeader extends StatelessWidget {
   final String imageAddress;
   final String label;
+  final double fSize;
 
   const ProfileHeader(
-      {Key? key, required this.label, required this.imageAddress})
+      {Key? key,
+      required this.label,
+      required this.imageAddress,
+      required this.fSize})
       : super(key: key);
 
   @override
@@ -251,7 +210,12 @@ class ProfileHeader extends StatelessWidget {
                   left: Radius.zero, right: Radius.circular(3)),
               color: kTextCream),
           alignment: Alignment.center,
-          child: Text(label),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: fSize,
+            ),
+          ),
         ),
       ],
     );

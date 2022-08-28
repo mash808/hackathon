@@ -29,8 +29,12 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Image.asset('images/quests_logo.png')]),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('images/quests_logo.png',
+                  width: MediaQuery.of(context).size.width * 0.7)
+            ],
+          ),
           FractionallySizedBox(
             widthFactor: 0.95,
             child: Container(
