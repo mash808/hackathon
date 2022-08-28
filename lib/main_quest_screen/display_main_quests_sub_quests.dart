@@ -92,7 +92,7 @@ class _MainQuestIndividualTasksState extends State<MainQuestIndividualTasks> {
             ),
             Container(width: (MediaQuery.of(context).size.width * 0.025)),
             Container(
-                width: (MediaQuery.of(context).size.width * 0.6),
+                width: (MediaQuery.of(context).size.width * 0.5),
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
