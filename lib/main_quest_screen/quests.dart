@@ -31,10 +31,6 @@ class _QuestsState extends State<Quests> {
                 alignment: WrapAlignment.spaceEvenly,
                 runSpacing: 10.0,
                 children: [
-                  // MainQuests(),
-                  // MainQuests(),
-                  // MainQuests(),
-                  // MainQuests(),
                   DisplayMainQuests(db: mainQuestDB),
                   addMainQuests(db: mainQuestDB),
                 ])
