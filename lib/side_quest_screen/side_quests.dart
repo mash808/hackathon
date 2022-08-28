@@ -20,22 +20,25 @@ class _SideQuestsState extends State<SideQuests> {
   @override
   Widget build(BuildContext context) {
     return ColumnWrapper(
-      child: Column(
-        children: [
-          Image.asset('images/side_quests_book.png',
-              height: (MediaQuery.of(context).size.height / 4)),
-          FractionallySizedBox(
-            widthFactor: 0.95,
-            child: Column(
-              children: [
-                DisplaySubQuests(db: sideQuestDB),
-                NewSideQuestButton(
-                  db: sideQuestDB,
-                ),
-              ],
-            ),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Image.asset('images/side_quests_book.png',
+                height: (MediaQuery.of(context).size.height / 4)),
+            FractionallySizedBox(
+              widthFactor: 0.95,
+              child: Column(
+                children: [
+                  DisplaySubQuests(db: sideQuestDB),
+                  NewSideQuestButton(
+                    db: sideQuestDB,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -63,7 +66,7 @@ class IndividualQuests extends StatelessWidget {
           CompleteSideQuestsButton(
             index: index,
           ),
-          Container(width: (MediaQuery.of(context).size.width * 0.025)),
+          Container(width: (MediaQuery.of(context).size.width * 0.010)),
           Container(
               width: (MediaQuery.of(context).size.width * 0.6),
               padding: const EdgeInsets.all(10),
@@ -183,7 +186,8 @@ class _NewSideQuestButtonState extends State<NewSideQuestButton> {
                           children: [
                             const Text('Quest Name:',
                                 style: TextStyle(
-                                    color: Color.fromRGBO(253, 211, 152, 1.0))),
+                                    color: Colors.deepOrange,
+                                    )),
                             Container(height: 5),
                             TextField(
                               controller: questNameController,
@@ -198,7 +202,8 @@ class _NewSideQuestButtonState extends State<NewSideQuestButton> {
                             ),
                             const Text('XP Amount:',
                                 style: TextStyle(
-                                    color: Color.fromRGBO(253, 211, 152, 1.0))),
+                                    color: Colors.deepOrange,
+                                    )),
                             Container(height: 5),
                             TextField(
                               controller: expAmountController,
