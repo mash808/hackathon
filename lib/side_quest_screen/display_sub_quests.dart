@@ -19,7 +19,7 @@ class DisplaySubQuests extends StatelessWidget {
         builder: (context, Box<SubTaskModel> items, _) {
           List<int> keys = items.keys.cast<int>().toList();
           return ListView.separated(
-            separatorBuilder: (_, index) => Divider(),
+            separatorBuilder: (_, index) => Divider(height: 0),
             itemCount: keys.length,
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
@@ -28,13 +28,19 @@ class DisplaySubQuests extends StatelessWidget {
               final int key = keys[index];
               final SubTaskModel? data = items.get(key);
               if (!data!.completed) {
-                return IndividualQuests(
-                  index: key,
-                  exp: data.exp,
-                  sideQuestName: data.subTaskName,
+                return Column(
+                  children: [
+                    IndividualQuests(
+                      index: key,
+                      exp: data.exp,
+                      sideQuestName: data.subTaskName,
+                    ),
+                    const SizedBox.shrink(),
+                  ],
                 );
-              } else {}
-              return Container(height: 0);
+              } else {
+                return const SizedBox.shrink();
+              }
             },
           );
         },
@@ -44,7 +50,7 @@ class DisplaySubQuests extends StatelessWidget {
         builder: (context, Box<SubTaskModel> items, _) {
           List<int> keys = items.keys.cast<int>().toList();
           return ListView.separated(
-            separatorBuilder: (_, index) => Divider(),
+            separatorBuilder: (_, index) => Divider(height: 0),
             itemCount: keys.length,
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
@@ -53,13 +59,19 @@ class DisplaySubQuests extends StatelessWidget {
               final int key = keys[index];
               final SubTaskModel? data = items.get(key);
               if (data!.completed) {
-                return IndividualQuests(
-                  index: key,
-                  exp: data.exp,
-                  sideQuestName: data.subTaskName,
+                return Column(
+                  children: [
+                    IndividualQuests(
+                      index: key,
+                      exp: data.exp,
+                      sideQuestName: data.subTaskName,
+                    ),
+                    const SizedBox.shrink(),
+                  ],
                 );
-              } else {}
-              return Container(height: 0);
+              } else {
+                return const SizedBox.shrink();
+              }
             },
           );
         },
