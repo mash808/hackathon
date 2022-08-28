@@ -31,24 +31,6 @@ class DisplaySubQuests extends StatelessWidget {
               exp: data!.exp,
               sideQuestName: data.subTaskName,
             );
-            // return Card(
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(15.0),
-            //   ),
-            //   color: Colors.blueGrey[200],
-            //   child: ListTile(
-            //     title: Text(
-            //       data!.subTaskName,
-            //       style: TextStyle(fontSize: 22, color: Colors.black),
-            //     ),
-            //     subtitle: Text(data.completed.toString(),
-            //         style: TextStyle(fontSize: 20, color: Colors.black38)),
-            //     leading: Text(
-            //       "$key",
-            //       style: TextStyle(fontSize: 18, color: Colors.black),
-            //     ),
-            //   ),
-            // );
           },
         );
       },

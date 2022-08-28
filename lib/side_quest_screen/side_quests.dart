@@ -41,64 +41,70 @@ class _SideQuestsState extends State<SideQuests> {
   }
 }
 
-class IndividualQuests extends StatelessWidget {
+class IndividualQuests extends StatefulWidget {
   final String sideQuestName;
   final int exp;
-  final int index;
+  final int? index;
 
   const IndividualQuests({
     super.key,
     required this.exp,
     required this.sideQuestName,
-    required this.index,
+    this.index,
   });
 
   @override
+  State<IndividualQuests> createState() => _IndividualQuestsState();
+}
+
+class _IndividualQuestsState extends State<IndividualQuests> {
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CompleteSideQuestsButton(
-            index: index,
-          ),
-          Container(width: (MediaQuery.of(context).size.width * 0.025)),
-          Container(
-              width: (MediaQuery.of(context).size.width * 0.6),
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                color: Color.fromRGBO(48, 36, 29, 1.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        margin: const EdgeInsets.only(bottom: 10.0),
+        child: (widget.index != null)
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    sideQuestName,
-                    style: const TextStyle(
-                      color: Color.fromRGBO(255, 184, 0, 1.0),
-                    ),
+                  CompleteSideQuestsButton(
+                    index: widget.index,
                   ),
-                  Text(
-                    'EXP: $exp',
-                    style: const TextStyle(
-                      color: Colors.lightGreen,
-                    ),
-                  ),
+                  Container(width: (MediaQuery.of(context).size.width * 0.025)),
+                  Container(
+                      width: (MediaQuery.of(context).size.width * 0.6),
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        color: Color.fromRGBO(48, 36, 29, 1.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.sideQuestName,
+                            style: const TextStyle(
+                              color: Color.fromRGBO(255, 184, 0, 1.0),
+                            ),
+                          ),
+                          Text(
+                            'EXP: ${widget.exp}',
+                            style: const TextStyle(
+                              color: Colors.lightGreen,
+                            ),
+                          ),
+                        ],
+                      ))
                 ],
-              ))
-        ],
-      ),
-    );
+              )
+            : Text('No sub tasks created...'));
   }
 }
 
 class CompleteSideQuestsButton extends ConsumerStatefulWidget {
-  final int index;
+  final int? index;
   CompleteSideQuestsButton({
     Key? key,
-    required this.index,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -117,7 +123,7 @@ class _CompleteSideQuestsButtonState
         onTap: () {
           if (data.get(widget.index)!.completed == false) {
             data.putAt(
-                widget.index,
+                widget.index!,
                 SubTaskModel(
                   subTaskName: data.get(widget.index)!.subTaskName,
                   exp: data.get(widget.index)!.exp,
@@ -127,7 +133,7 @@ class _CompleteSideQuestsButtonState
             ref.read(expLevel.notifier).increaseLevel(exp_new!.exp);
           } else {
             data.putAt(
-                widget.index,
+                widget.index!,
                 SubTaskModel(
                   subTaskName: data.get(widget.index)!.subTaskName,
                   exp: data.get(widget.index)!.exp,
