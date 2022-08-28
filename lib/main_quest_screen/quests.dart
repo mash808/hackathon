@@ -31,10 +31,6 @@ class _QuestsState extends State<Quests> {
                 alignment: WrapAlignment.spaceEvenly,
                 runSpacing: 10.0,
                 children: [
-                  // MainQuests(),
-                  // MainQuests(),
-                  // MainQuests(),
-                  // MainQuests(),
                   DisplayMainQuests(db: mainQuestDB),
                   addMainQuests(db: mainQuestDB),
                 ])
@@ -146,7 +142,10 @@ class _addMainQuestsState extends State<addMainQuests> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                      title: const Text('Create Quest'),
+                      title: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: const Text('Create Quest'),
+                      ),
                       backgroundColor: Color.fromRGBO(247, 235, 209, 1.0),
                       content: StatefulBuilder(builder:
                           (BuildContext context, StateSetter setState) {
@@ -156,7 +155,8 @@ class _addMainQuestsState extends State<addMainQuests> {
                               const Text('Quest Name:',
                                   style: TextStyle(
                                       color:
-                                          Color.fromRGBO(253, 211, 152, 1.0))),
+                                            Colors.deepOrange,
+                                          )),
                               Container(height: 5),
                               Container(height: 5),
                               TextField(
@@ -170,10 +170,14 @@ class _addMainQuestsState extends State<addMainQuests> {
                                   hintText: 'Complete Hackathon',
                                 ),
                               ),
-                              const Text('Pick Diffuculty Level:',
-                                  style: TextStyle(
-                                      color:
-                                          Color.fromRGBO(253, 211, 152, 1.0))),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: const Text('Pick Diffuculty Level:',
+                                    style: TextStyle(
+                                        color:
+                                            Colors.deepOrange,
+                                            )),
+                              ),
                               Container(height: 5),
                               Column(
                                 children: [
