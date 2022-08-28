@@ -26,8 +26,11 @@ class MainQuestIconDisplay extends StatefulWidget {
 }
 
 class _MainQuestIconDisplayState extends State<MainQuestIconDisplay> {
+  int test = 1;
   void refresh() {
-    setState(() {});
+    setState(() {
+      test = 2;
+    });
   }
 
   @override
@@ -58,7 +61,7 @@ class _MainQuestIconDisplayState extends State<MainQuestIconDisplay> {
                             ),
                             Row(
                               children: [
-                                Text('HP: TODO HP'),
+                                // Text('HP: TODO HP'),
                                 // Container(
                                 //   width: 10,
                                 //   child: LinearProgressIndicator(
@@ -75,7 +78,7 @@ class _MainQuestIconDisplayState extends State<MainQuestIconDisplay> {
                             NewMainQuestSideQuestButton(
                               db: Boxes.getMainQuests(),
                               indexMainQuest: widget.index,
-                              refresh: () => refresh(),
+                              refresh: refresh,
                             )
                           ],
                         ),
