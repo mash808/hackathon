@@ -69,7 +69,7 @@ class _IndividualQuestsState extends State<IndividualQuests> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CompleteSideQuestsButton(
-            index: index,
+            index: widget.index,
           ),
           Container(width: (MediaQuery.of(context).size.width * 0.010)),
           Container(
@@ -83,13 +83,13 @@ class _IndividualQuestsState extends State<IndividualQuests> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    sideQuestName,
+                    widget.sideQuestName,
                     style: const TextStyle(
                       color: Color.fromRGBO(255, 184, 0, 1.0),
                     ),
                   ),
                   Text(
-                    'EXP: $exp',
+                    'EXP: ${widget.exp}',
                     style: const TextStyle(
                       color: Colors.lightGreen,
                     ),
