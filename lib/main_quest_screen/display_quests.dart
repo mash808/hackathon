@@ -27,6 +27,7 @@ class DisplayMainQuests extends StatelessWidget {
             final int key = keys[index];
             final MainQuestModel? data = items.get(key);
             return MainQuestIconDisplay(
+              index: key,
               iconPath: data!.mainQuestIconPath,
               mainQuestName: data.mainQuestName,
             );
