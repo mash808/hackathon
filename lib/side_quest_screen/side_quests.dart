@@ -109,16 +109,38 @@ class CompleteSideQuestsButton extends ConsumerStatefulWidget {
 class _CompleteSideQuestsButtonState
     extends ConsumerState<CompleteSideQuestsButton> {
   Box<SubTaskModel> data = Hive.box('sideQuestDB');
+  String image_icon = 'images/side_quests_icon.png';
   @override
   Widget build(BuildContext context) {
     final globalExp = ref.watch(expLevel.notifier).state;
     return GestureDetector(
         onTap: () {
-          var exp_new = data.get(widget.index);
-          ref.read(expLevel.notifier).increaseLevel(exp_new!.exp);
+          if (data.get(widget.index)!.completed == false) {
+            data.putAt(
+                widget.index,
+                SubTaskModel(
+                  subTaskName: data.get(widget.index)!.subTaskName,
+                  exp: data.get(widget.index)!.exp,
+                  completed: true,
+                ));
+            var exp_new = data.get(widget.index);
+            ref.read(expLevel.notifier).increaseLevel(exp_new!.exp);
+          } else {
+            data.putAt(
+                widget.index,
+                SubTaskModel(
+                  subTaskName: data.get(widget.index)!.subTaskName,
+                  exp: data.get(widget.index)!.exp,
+                  completed: false,
+                ));
+            var exp_new = data.get(widget.index);
+            ref.read(expLevel.notifier).increaseLevel(-exp_new!.exp);
+          }
         },
-        child: Image.asset(
-            'images/side_quests_icon.png')); // Can make this image darker if not completed??
+        child: (data.get(widget.index)!.completed == true)
+            ? Image.asset('images/side_quests_icon_dark.png')
+            : Image.asset(
+                'images/side_quests_icon.png')); // Can make this image darker if not completed??
   }
 }
 
