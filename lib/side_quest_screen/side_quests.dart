@@ -200,6 +200,7 @@ class _NewSideQuestButtonState extends State<NewSideQuestButton> {
                                 hintText: 'Complete Hackathon',
                               ),
                             ),
+                            Container(height: 10),
                             const Text('XP Amount:',
                                 style: TextStyle(
                                     color: Colors.deepOrange,
