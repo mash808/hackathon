@@ -154,9 +154,8 @@ class _addMainQuestsState extends State<addMainQuests> {
                             children: [
                               const Text('Quest Name:',
                                   style: TextStyle(
-                                      color:
-                                            Colors.deepOrange,
-                                          )),
+                                    color: Colors.deepOrange,
+                                  )),
                               Container(height: 5),
                               Container(height: 5),
                               TextField(
@@ -174,9 +173,8 @@ class _addMainQuestsState extends State<addMainQuests> {
                                 padding: const EdgeInsets.only(top: 20.0),
                                 child: const Text('Pick Diffuculty Level:',
                                     style: TextStyle(
-                                        color:
-                                            Colors.deepOrange,
-                                            )),
+                                      color: Colors.deepOrange,
+                                    )),
                               ),
                               Container(height: 5),
                               Column(
@@ -244,20 +242,7 @@ class _addMainQuestsState extends State<addMainQuests> {
                                     mainQuestIconPath:
                                         ('images/${_level.toString().split(".").last}_boss.png'),
                                     mainQuestName: mainQuestNameController.text,
-                                    subTasks: <SubTaskModel>[
-                                      SubTaskModel(
-                                          subTaskName: 'task 1',
-                                          exp: 5,
-                                          completed: false),
-                                      SubTaskModel(
-                                          subTaskName: 'task 2',
-                                          exp: 10,
-                                          completed: false),
-                                      SubTaskModel(
-                                          subTaskName: 'task 3',
-                                          exp: 50,
-                                          completed: false)
-                                    ],
+                                    subTasks: <SubTaskModel>[],
                                     exp: 250,
                                     completed: false));
                               });
