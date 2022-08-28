@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon_app/column_wrapper.dart';
+import 'package:hackathon_app/main_quest_screen/display_quests.dart';
 import 'package:hackathon_app/models/main_quest.dart';
 import 'package:hackathon_app/models/sub_task_model.dart';
 import 'package:hive/hive.dart';
@@ -30,10 +31,11 @@ class _QuestsState extends State<Quests> {
                 alignment: WrapAlignment.spaceEvenly,
                 runSpacing: 10.0,
                 children: [
-                  MainQuests(),
-                  MainQuests(),
-                  MainQuests(),
-                  MainQuests(),
+                  // MainQuests(),
+                  // MainQuests(),
+                  // MainQuests(),
+                  // MainQuests(),
+                  DisplayMainQuests(db: mainQuestDB),
                   addMainQuests(db: mainQuestDB),
                 ])
           ],
@@ -122,7 +124,7 @@ class addMainQuests extends StatefulWidget {
   State<addMainQuests> createState() => _addMainQuestsState();
 }
 
-enum boss { veryeasy, easy, medium, hard, veryhard }
+enum boss { very_easy, easy, medium, hard, very_hard }
 
 class _addMainQuestsState extends State<addMainQuests> {
   final mainQuestNameController = TextEditingController();
@@ -177,11 +179,11 @@ class _addMainQuestsState extends State<addMainQuests> {
                                 children: [
                                   RadioListTile<boss>(
                                       title: const Text("Very Easy"),
-                                      value: boss.veryeasy,
+                                      value: boss.very_easy,
                                       groupValue: _level,
                                       onChanged: (boss? value) {
                                         setState(() {
-                                          _level = boss.veryeasy;
+                                          _level = value;
                                         });
                                       }),
                                   RadioListTile<boss>(
@@ -213,7 +215,7 @@ class _addMainQuestsState extends State<addMainQuests> {
                                       }),
                                   RadioListTile<boss>(
                                       title: const Text("Very Hard"),
-                                      value: boss.veryhard,
+                                      value: boss.very_hard,
                                       groupValue: _level,
                                       onChanged: (boss? value) {
                                         setState(() {
@@ -233,25 +235,29 @@ class _addMainQuestsState extends State<addMainQuests> {
                         TextButton(
                             child: const Text('Confirm'),
                             onPressed: () {
-                              mainDB.add(MainQuestModel(
-                                  mainQuestIconPath: 'images/easy_boss.png',
-                                  mainQuestName: mainQuestNameController.text,
-                                  subTasks: <SubTaskModel>[
-                                    SubTaskModel(
-                                        subTaskName: 'task 1',
-                                        exp: 5,
-                                        completed: false),
-                                    SubTaskModel(
-                                        subTaskName: 'task 2',
-                                        exp: 10,
-                                        completed: false),
-                                    SubTaskModel(
-                                        subTaskName: 'task 3',
-                                        exp: 50,
-                                        completed: false)
-                                  ],
-                                  exp: 250,
-                                  completed: false));
+                              setState(() {
+                                mainDB.add(MainQuestModel(
+                                    mainQuestIconPath:
+                                        ('images/${_level.toString().split(".").last}_boss.png'),
+                                    mainQuestName: mainQuestNameController.text,
+                                    subTasks: <SubTaskModel>[
+                                      SubTaskModel(
+                                          subTaskName: 'task 1',
+                                          exp: 5,
+                                          completed: false),
+                                      SubTaskModel(
+                                          subTaskName: 'task 2',
+                                          exp: 10,
+                                          completed: false),
+                                      SubTaskModel(
+                                          subTaskName: 'task 3',
+                                          exp: 50,
+                                          completed: false)
+                                    ],
+                                    exp: 250,
+                                    completed: false));
+                              });
+
                               mainQuestNameController.clear();
                               Navigator.pop(context);
                             })
